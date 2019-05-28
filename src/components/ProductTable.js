@@ -9,10 +9,15 @@ export default class ProductTable extends React.Component {
     return (
       <div>
         <table>
-          <th>
-            <td>Name</td>
-            <td>Price</td>
-          </th>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+          </tbody>
         </table>
       </div>
     )
