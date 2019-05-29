@@ -1,13 +1,18 @@
 import React from "react"
 import { isArray } from "util";
-import ProductCategoryRow from "./components/ProductCategoryRow"
-import ProductRow from "./components/ProductRow"
+import ProductCategoryRow from "./ProductCategoryRow"
+import ProductRow from "./ProductRow"
 
 export default class ProductTable extends React.Component {
   constructor(props) {
     super(props)
   }
 
+  /**
+   * 把data数据变成 {产品种类：数组} 的对象形式
+   * @param 代表产品种类的字段名
+   * return {产品种类：相关产品对象组成的数组}
+  **/ 
   sortProduct(key) {
     const data = this.props.data
     let resultObject = {}
@@ -21,18 +26,25 @@ export default class ProductTable extends React.Component {
         }
         resultObject[sort].push(object)
       })
+      /* resultObject = {
+          "Sporting Goods": [{"category": "Sporting Goods", "price": "$49.99", "stocked": true, "name": "Football"}, ...],
+          "Electronics": [{"category": "Electronics", "price": "$99.99", "stocked": true, "name": "iPod Touch"}, ...]
+         }
+      */
       return resultObject
     }
   }
 
   render() {
     const sortObject = this.sortProduct("category")
-    const category = Object.keys(sortObject).map((category) => {
-      const products = sortObject[category]
-      products = products.map((productData) => <ProductRow key={productData.name} name={productData.name} price={productData.price}/>)
+    const product = Object.keys(sortObject).map((category) => {
+      const value = sortObject[category]
+      const productRowList = value.map((productData) => <ProductRow key={productData.name} name={productData.name} price={productData.price}/>)
       return (
-        <ProductCategoryRow key={category} category={category}/>
-        {products}
+        <tbody>
+          <ProductCategoryRow key={category} category={category}/>
+          {productRowList}
+        </tbody>
       )
     })
 
@@ -45,9 +57,7 @@ export default class ProductTable extends React.Component {
               <th>Price</th>
             </tr>
           </thead>
-          <tbody>
-            
-          </tbody>
+          {product}
         </table>
       </div>
     )
