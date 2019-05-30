@@ -6,10 +6,12 @@ export default class ProductRow extends React.Component {
   }
 
   render() {
+    
+    const name = this.props.productData.stocked ? this.props.productData.name : <span style={{color: 'red'}}>{this.props.productData.name}</span>
     return (
       <tr>
-        <td>{this.props.name}</td>
-        <td>{this.props.price}</td>
+        <td>{name}</td>
+        <td>{this.props.productData.price}</td>
       </tr>
     )
   }
